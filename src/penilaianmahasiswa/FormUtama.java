@@ -38,7 +38,7 @@ public class FormUtama extends javax.swing.JFrame {
         jToolBar1.setBorder(null);
         jToolBar1.setRollover(true);
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\sad\\Downloads\\Gambar\\mahasiswa.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/penilaianmahasiswa/gambar/mahasiswa.png"))); // NOI18N
         jButton1.setText("Form Mahasiswa");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
