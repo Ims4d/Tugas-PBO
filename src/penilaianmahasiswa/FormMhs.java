@@ -355,7 +355,7 @@ public class FormMhs extends javax.swing.JFrame {
         try (
             Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
             Statement st = con.createStatement();
-            ResultSet res = st.executeQuery("SELECT * FROM mahasiswa");        
+            ResultSet res = st.executeQuery("SELECT * FROM t_mahasiswa");        
         ){  
             String data[] = new String[5];
             while(res.next()){
@@ -391,7 +391,7 @@ public class FormMhs extends javax.swing.JFrame {
             Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
             Statement st = con.createStatement();
         ){
-            final String QUERY = "DELETE FROM mahasiswa WHERE NIM = '"+newTableModel.getValueAt(selectedRow, 0).toString()+"'";
+            final String QUERY = "DELETE FROM t_mahasiswa WHERE nim = '"+newTableModel.getValueAt(selectedRow, 0).toString()+"'";
             st.executeUpdate(QUERY);
             st.close();
             con.close();
@@ -427,12 +427,12 @@ public class FormMhs extends javax.swing.JFrame {
                 Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
                 Statement st = con.createStatement();
             ){
-                final String QUERY = "UPDATE mahasiswa SET NIM = '"+txtNIM.getText()
-                        + "', NamaMhs = '"+txtNama.getText()
-                        + "', TempatLahir = '"+txtTempatLahir.getText()
-                        + "', TanggalLahir = '"+txtTanggalLahir.getDate().toString()
-                        + "', Alamat = '"+txtAlamat.getText()
-                        + "' WHERE NIM = '"+newTableModel.getValueAt(selectedRow, 0).toString()+"'";
+                final String QUERY = "UPDATE t_mahasiswa SET nim = '"+txtNIM.getText()
+                        + "', nama = '"+txtNama.getText()
+                        + "', tempat_lahir = '"+txtTempatLahir.getText()
+                        + "', tanggal_lahir = '"+txtTanggalLahir.getDate().toString()
+                        + "', alamat = '"+txtAlamat.getText()
+                        + "' WHERE nim = '"+newTableModel.getValueAt(selectedRow, 0).toString()+"'";
 
                 st.executeUpdate(QUERY);
 		st.close();
@@ -462,7 +462,7 @@ public class FormMhs extends javax.swing.JFrame {
         try (
             Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
             Statement st = con.createStatement();
-            ResultSet res = st.executeQuery("SELECT * FROM mahasiswa WHERE NIM = '"+txtCariNIM.getText()+"'");
+            ResultSet res = st.executeQuery("SELECT * FROM t_mahasiswa WHERE nim = '"+txtCariNIM.getText()+"'");
         ){  
             String data[] = new String[5];
             while(res.next()){
@@ -519,8 +519,8 @@ public class FormMhs extends javax.swing.JFrame {
                 Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
                 Statement st = con.createStatement();
             ){
-                final String QUERY = "INSERT INTO mahasiswa"
-                        + "(NIM, NamaMhs, TempatLahir, TanggalLahir, Alamat)"
+                final String QUERY = "INSERT INTO t_mahasiswa"
+                        + "(nim, nama, tempat_lahir, tanggal_lahir, alamat)"
                         + "VALUES ('"+txtNIM.getText()+"',"
                         + "'"+txtNama.getText()+"',"
                         + "'"+txtTempatLahir.getText()+"',"
