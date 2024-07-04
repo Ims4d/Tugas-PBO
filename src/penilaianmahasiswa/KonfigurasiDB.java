@@ -20,11 +20,10 @@ public class KonfigurasiDB {
     private String database;
     private String user;
     private String password;
-    private Properties configData;
     
     public KonfigurasiDB(){
         try {
-            configData = new Properties();
+            Properties configData = new Properties();
             configData.load(new FileInputStream("./src/penilaianmahasiswa/dbconfig.properties"));
             
             driver = configData.getProperty("DB_DRIVER");
