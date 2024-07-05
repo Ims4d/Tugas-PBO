@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,6 +30,7 @@ public class FormNilai extends javax.swing.JFrame {
         btnUbah.setEnabled(false);
         btnHapus.setEnabled(false);
         
+        checkData();
         loadTableData();
     }
 
@@ -48,10 +50,7 @@ public class FormNilai extends javax.swing.JFrame {
         txtCariNIM = new javax.swing.JTextField();
         btnCari = new javax.swing.JButton();
         btnTampilSeluruhData = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtKodeMK = new javax.swing.JTextField();
-        txtNIM = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -66,9 +65,10 @@ public class FormNilai extends javax.swing.JFrame {
         btnSimpan = new javax.swing.JButton();
         btnBatal = new javax.swing.JButton();
         btnKeluar = new javax.swing.JButton();
+        cbKodeMK = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(728, 409));
+        setPreferredSize(new java.awt.Dimension(728, 435));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -147,9 +147,6 @@ public class FormNilai extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("NIM");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Kode Mata Kuliah");
 
@@ -218,6 +215,8 @@ public class FormNilai extends javax.swing.JFrame {
             }
         });
 
+        cbKodeMK.setModel(newCbModel());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -231,25 +230,22 @@ public class FormNilai extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel6))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtNIM, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtKodeMK, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtNilai, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(txtNilai)
+                            .addComponent(cbKodeMK, 0, 101, Short.MAX_VALUE))
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtIndeks, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtIndeks, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTambah)
                         .addGap(18, 18, 18)
@@ -272,31 +268,27 @@ public class FormNilai extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtNilai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtNIM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
                     .addComponent(jLabel7)
                     .addComponent(txtIndeks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtKodeMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbKodeMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6)
+                    .addComponent(txtNilai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBatal)
-                    .addComponent(btnSimpan)
-                    .addComponent(btnUbah)
-                    .addComponent(btnHapus)
                     .addComponent(btnTambah)
+                    .addComponent(btnHapus)
+                    .addComponent(btnUbah)
+                    .addComponent(btnSimpan)
+                    .addComponent(btnBatal)
                     .addComponent(btnKeluar))
-                .addGap(0, 38, Short.MAX_VALUE))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         pack();
@@ -323,6 +315,44 @@ public class FormNilai extends javax.swing.JFrame {
         };
     }
 
+    private javax.swing.ComboBoxModel newCbModel(){
+        String[] cbItems = {};
+        ArrayList<String> cbElement = new ArrayList<>();
+        try (
+            Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
+            Statement st = con.createStatement();
+            ResultSet res = st.executeQuery("SELECT kd_mk FROM t_mata_kuliah");
+        ){  
+            while(res.next()){
+                cbElement.add(res.getString(1));
+            }
+            cbItems = cbElement.toArray(new String[0]);
+            res.close();
+            st.close();
+            con.close();
+        } catch(SQLException e) {
+            javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
+        }
+        return new javax.swing.DefaultComboBoxModel(cbItems);
+    }
+    
+    private void checkData(){
+        try (
+            Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
+            Statement st = con.createStatement();
+            ResultSet res = st.executeQuery("SELECT * FROM t_nilai");
+        ){  
+            if(!res.next()){
+                st.executeUpdate("INSERT INTO t_nilai (nim) SELECT nim FROM t_mahasiswa");
+            }
+            res.close();
+            st.close();
+            con.close();
+        } catch(SQLException e) {
+            javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
+        }
+    }
+    
     private void loadTableData(){
         try (
             Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
@@ -350,7 +380,6 @@ public class FormNilai extends javax.swing.JFrame {
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         textCleanup();
         enableInput();
-        txtNIM.requestFocus();
         btnSimpan.setEnabled(true);
         btnBatal.setEnabled(true);
         btnUbah.setEnabled(false);
@@ -363,11 +392,15 @@ public class FormNilai extends javax.swing.JFrame {
             Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
             Statement st = con.createStatement();
         ){
-            final String QUERY = "DELETE FROM t_nilai WHERE kd_nilai = '"+newTableModel.getValueAt(selectedRow, 0).toString()+"'";
+            final String QUERY = "UPDATE t_nilai SET kd_mk = NULL, nilai = NULL, indeks = NULL, ket = NULL WHERE nim = '"+newTableModel.getValueAt(selectedRow, 1).toString()+"'";
             st.executeUpdate(QUERY);
             st.close();
             con.close();
-            newTableModel.removeRow(selectedRow);
+            
+            newTableModel.setValueAt("", selectedRow, 2);
+            newTableModel.setValueAt("", selectedRow, 3);
+            newTableModel.setValueAt("", selectedRow, 4);
+            newTableModel.setValueAt("", selectedRow, 5);
             
             textCleanup();
             disableInput();
@@ -379,9 +412,7 @@ public class FormNilai extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
-        if(txtNIM.getText().isEmpty() ||
-            txtKodeMK.getText().isEmpty() ||
-            txtNilai.getText().isEmpty() ||
+        if(txtNilai.getText().isEmpty() ||
             txtIndeks.getText().isEmpty() ||
             txtKeterangan.getText().isEmpty()
         ){
@@ -391,16 +422,17 @@ public class FormNilai extends javax.swing.JFrame {
                 Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
                 Statement st = con.createStatement();
             ){
-                final String QUERY = "UPDATE t_nilai SET nim = '"+txtNIM.getText()
-                        + "', kd_mk = '"+txtKodeMK.getText()
+                final String QUERY = "UPDATE t_nilai SET kd_mk = '"+cbKodeMK.getSelectedItem()
                         + "', nilai = '"+txtNilai.getText()
                         + "', indeks = '"+txtIndeks.getText()
                         + "', ket = '"+txtKeterangan.getText()
-                        + "' WHERE nim = '"+newTableModel.getValueAt(selectedRow, 0).toString()+"'";
+                        + "' WHERE nim = '"+newTableModel.getValueAt(selectedRow, 1).toString()+"'";
                 st.executeUpdate(QUERY);
                 
-                newTableModel.setRowCount(0);
-                loadTableData();
+                newTableModel.setValueAt(cbKodeMK.getSelectedItem(), selectedRow, 2);
+                newTableModel.setValueAt(txtNilai.getText(), selectedRow, 3);
+                newTableModel.setValueAt(txtIndeks.getText(), selectedRow, 4);
+                newTableModel.setValueAt(txtKeterangan.getText(), selectedRow, 5);
                 
 		textCleanup();
                 disableInput();
@@ -413,9 +445,7 @@ public class FormNilai extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        if(txtNIM.getText().isEmpty() ||
-            txtKodeMK.getText().isEmpty() ||
-            txtNilai.getText().isEmpty() ||
+        if(txtNilai.getText().isEmpty() ||
             txtIndeks.getText().isEmpty() ||
             txtKeterangan.getText().isEmpty()
         ){
@@ -425,9 +455,8 @@ public class FormNilai extends javax.swing.JFrame {
                 Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
                 Statement st = con.createStatement();
             ){
-                final String QUERY = "INSERT INTO t_nilai (nim, kd_mk, nilai, indeks, ket)"
-                        + "VALUES ('"+txtNIM.getText()+"',"
-                        + "'"+txtKodeMK.getText()+"',"
+                final String QUERY = "INSERT INTO t_nilai (kd_mk, nilai, indeks, ket)"
+                        + "VALUES ('"+cbKodeMK.getSelectedItem()+"',"
                         + "'"+txtNilai.getText()+"',"
                         + "'"+txtIndeks.getText()+"',"
                         + "'"+txtKeterangan.getText()+"')";
@@ -435,8 +464,10 @@ public class FormNilai extends javax.swing.JFrame {
                 st.close();
                 con.close();
                 
-                newTableModel.setRowCount(0);
-                loadTableData();
+                newTableModel.setValueAt(cbKodeMK.getSelectedItem(), 0, 2);
+                newTableModel.setValueAt(txtNilai.getText(), 0, 3);
+                newTableModel.setValueAt(txtIndeks.getText(), 0, 4);
+                newTableModel.setValueAt(txtKeterangan.getText(), 0, 5);
                 
 		textCleanup();
                 disableInput();
@@ -508,34 +539,41 @@ public class FormNilai extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void showSelected(){
-        txtNIM.setText(newTableModel.getValueAt(selectedRow, 1).toString());
-        txtKodeMK.setText(newTableModel.getValueAt(selectedRow, 2).toString());
-        txtNilai.setText(newTableModel.getValueAt(selectedRow, 3).toString());
-        txtIndeks.setText(newTableModel.getValueAt(selectedRow, 4).toString());
-        txtKeterangan.setText(newTableModel.getValueAt(selectedRow, 5).toString());
+        String kodeMKVal = "";
+        String nilaiVal = "";
+        String indeksVal = "";
+        String ketVal = "";
+        try {
+            kodeMKVal = newTableModel.getValueAt(selectedRow, 2).toString();
+            nilaiVal = newTableModel.getValueAt(selectedRow, 3).toString();
+            indeksVal = newTableModel.getValueAt(selectedRow, 4).toString();
+            ketVal = newTableModel.getValueAt(selectedRow, 5).toString();
+        } catch (NullPointerException e){
+            
+        }
+        cbKodeMK.setSelectedItem(kodeMKVal);
+        txtNilai.setText(nilaiVal);
+        txtIndeks.setText(indeksVal);
+        txtKeterangan.setText(ketVal);
         btnHapus.setEnabled(true);
         btnUbah.setEnabled(true);
     }
     
     private void textCleanup(){
-        txtNIM.setText("");
-        txtKodeMK.setText("");
         txtNilai.setText("");
         txtIndeks.setText("");
         txtKeterangan.setText("");
     }
     
     private void disableInput(){
-        txtNIM.setEnabled(false);
-        txtKodeMK.setEnabled(false);
+        cbKodeMK.setEnabled(false);
         txtNilai.setEnabled(false);
         txtIndeks.setEnabled(false);
         txtKeterangan.setEnabled(false);
     }
     
     private void enableInput(){
-        txtNIM.setEnabled(true);
-        txtKodeMK.setEnabled(true);
+        cbKodeMK.setEnabled(true);
         txtNilai.setEnabled(true);
         txtIndeks.setEnabled(true);
         txtKeterangan.setEnabled(true);
@@ -585,9 +623,9 @@ public class FormNilai extends javax.swing.JFrame {
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnTampilSeluruhData;
     private javax.swing.JButton btnUbah;
+    private javax.swing.JComboBox<String> cbKodeMK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -599,8 +637,6 @@ public class FormNilai extends javax.swing.JFrame {
     private javax.swing.JTextField txtCariNIM;
     private javax.swing.JTextField txtIndeks;
     private javax.swing.JTextField txtKeterangan;
-    private javax.swing.JTextField txtKodeMK;
-    private javax.swing.JTextField txtNIM;
     private javax.swing.JTextField txtNilai;
     // End of variables declaration//GEN-END:variables
 }

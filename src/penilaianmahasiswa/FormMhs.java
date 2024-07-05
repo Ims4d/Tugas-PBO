@@ -10,6 +10,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -358,6 +362,7 @@ public class FormMhs extends javax.swing.JFrame {
             ResultSet res = st.executeQuery("SELECT * FROM t_mahasiswa");        
         ){  
             String data[] = new String[5];
+            
             while(res.next()){
                 data[0] = res.getString(1);
                 data[1] = res.getString(2);
@@ -366,7 +371,6 @@ public class FormMhs extends javax.swing.JFrame {
                 data[4] = res.getString(5);
                 newTableModel.addRow(data);
             }
-            
             res.close();
             st.close();
             con.close();
@@ -393,6 +397,7 @@ public class FormMhs extends javax.swing.JFrame {
         ){
             final String QUERY = "DELETE FROM t_mahasiswa WHERE nim = '"+newTableModel.getValueAt(selectedRow, 0).toString()+"'";
             st.executeUpdate(QUERY);
+            st.executeUpdate("DELETE FROM t_nilai");
             st.close();
             con.close();
             newTableModel.removeRow(selectedRow);
@@ -409,8 +414,15 @@ public class FormMhs extends javax.swing.JFrame {
     private void tabelMahasiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMahasiswaMouseClicked
         if(evt.getClickCount() == 1){
             selectedRow = tabelMahasiswa.getSelectedRow();
+            txtNIM.requestFocus();
+            btnHapus.setEnabled(true);
+            btnUbah.setEnabled(true);
             enableInput();
-            showSelected();
+            try {
+                showSelected();
+            } catch (ParseException ex) {
+                Logger.getLogger(FormMhs.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_tabelMahasiswaMouseClicked
 
@@ -526,10 +538,8 @@ public class FormMhs extends javax.swing.JFrame {
                         + "'"+txtTempatLahir.getText()+"',"
                         + "'"+txtTanggalLahir.getDate().toString()+"',"
                         + "'"+txtAlamat.getText()+"')";
-                
                 st.executeUpdate(QUERY);
-		st.close();
-                con.close();
+		st.executeUpdate("INSERT INTO t_nilai (nim) VALUES ('"+txtNIM.getText()+"')");
                 
                 String data[] = new String[5];
                 data[0] = txtNIM.getText();
@@ -544,20 +554,21 @@ public class FormMhs extends javax.swing.JFrame {
 		btnSimpan.setEnabled(false);
                 btnBatal.setEnabled(false);
                 btnKeluar.setEnabled(true);
+                
+                st.close();
+                con.close();
             } catch(SQLException e) {
 		javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
             }
         }
     }
 
-    private void showSelected(){
+    private void showSelected() throws ParseException{
         txtNIM.setText(newTableModel.getValueAt(selectedRow, 0).toString());
         txtNama.setText(newTableModel.getValueAt(selectedRow, 1).toString());
         txtTempatLahir.setText(newTableModel.getValueAt(selectedRow, 2).toString());
-        txtTanggalLahir.setText(newTableModel.getValueAt(selectedRow, 3).toString());
+        txtTanggalLahir.setDate(LocalDate.parse(newTableModel.getValueAt(selectedRow, 3).toString()));
         txtAlamat.setText(newTableModel.getValueAt(selectedRow, 4).toString());
-        btnHapus.setEnabled(true);
-        btnUbah.setEnabled(true);
     }
     
     private void textCleanup(){
