@@ -194,7 +194,7 @@ public class FormMhs extends javax.swing.JFrame {
             }
         });
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), " Pencarian Data Mahasiswa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), " Pencarian Data Mahasiswa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         btnCari.setText("Cari");
         btnCari.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -316,7 +316,7 @@ public class FormMhs extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTambah)
                     .addComponent(btnHapus)
@@ -324,12 +324,17 @@ public class FormMhs extends javax.swing.JFrame {
                     .addComponent(btnSimpan)
                     .addComponent(btnBatal)
                     .addComponent(btnKeluar))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 743, 499);
+        setBounds(0, 0, 743, 492);
     }// </editor-fold>//GEN-END:initComponents
 
+    private final KonfigurasiDB conf = new KonfigurasiDB();
+    private final String DATABASE = conf.getDBName();
+    private final String USER = conf.getDBUser();
+    private final String PASSWORD = conf.getDBPassword();
+    
     private final javax.swing.table.DefaultTableModel newTableModel = createNewTableModel();
     private int selectedRow = 0;
     
@@ -346,11 +351,6 @@ public class FormMhs extends javax.swing.JFrame {
         };
     }
 
-    private final KonfigurasiDB conf = new KonfigurasiDB();
-    private final String DATABASE = conf.getDBName();
-    private final String USER = conf.getDBUser();
-    private final String PASSWORD = conf.getDBPassword();
-    
     private void loadTableData(){
         try (
             Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);

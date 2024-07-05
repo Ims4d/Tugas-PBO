@@ -5,6 +5,12 @@
  */
 package penilaianmahasiswa;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author sad
@@ -16,6 +22,14 @@ public class FormMataKuliah extends javax.swing.JFrame {
      */
     public FormMataKuliah() {
         initComponents();
+        disableInput();
+        
+        btnSimpan.setEnabled(false);
+        btnBatal.setEnabled(false);
+        btnUbah.setEnabled(false);
+        btnHapus.setEnabled(false);
+        
+        loadTableData();
     }
 
     /**
@@ -31,31 +45,36 @@ public class FormMataKuliah extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        kodeMKCari = new javax.swing.JTextField();
+        btnTampilSeluruhData = new javax.swing.JButton();
+        btnCari = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNamaMK = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtKodeMK = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        tableMK = new javax.swing.JTable();
+        btnTambah = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
+        btnUbah = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
+        btnBatal = new javax.swing.JButton();
+        btnKeluar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(728, 54));
 
+        jLabel1.setText("Form Mata Kuliah");
         jLabel1.setBackground(new java.awt.Color(102, 102, 102));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Form Mata Kuliah");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -74,16 +93,26 @@ public class FormMataKuliah extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), "Pencarian Mata Kuliah", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Pencarian Mata Kuliah", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Masukkan Kode MK");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setText("Tampilkan Seluruh Data");
+        btnTampilSeluruhData.setText("Tampilkan Seluruh Data");
+        btnTampilSeluruhData.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnTampilSeluruhData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTampilSeluruhDataActionPerformed(evt);
+            }
+        });
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton8.setText("Cari");
+        btnCari.setText("Cari");
+        btnCari.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -93,11 +122,11 @@ public class FormMataKuliah extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(kodeMKCari, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton8)
+                .addComponent(btnCari)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTampilSeluruhData, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -106,39 +135,73 @@ public class FormMataKuliah extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton8))
+                    .addComponent(kodeMKCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTampilSeluruhData)
+                    .addComponent(btnCari))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Nama Mata Kuliah");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Kode Mata Kuliah");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
+        tableMK.setModel(newTableModel);
+        tableMK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMKMouseClicked(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
+        jScrollPane1.setViewportView(tableMK);
 
-        jButton2.setText("Tambah");
+        btnTambah.setText("Tambah");
+        btnTambah.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Hapus");
+        btnHapus.setText("Hapus");
+        btnHapus.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Ubah");
+        btnUbah.setText("Ubah");
+        btnUbah.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUbahActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Simpan");
+        btnSimpan.setText("Simpan");
+        btnSimpan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
 
-        jButton6.setText("Batal");
+        btnBatal.setText("Batal");
+        btnBatal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBatalActionPerformed(evt);
+            }
+        });
 
-        jButton7.setText("Keluar");
+        btnKeluar.setText("Keluar");
+        btnKeluar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKeluarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,21 +219,21 @@ public class FormMataKuliah extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtKodeMK, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNamaMK, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnTambah)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(btnHapus)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)
+                        .addComponent(btnUbah)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5)
+                        .addComponent(btnSimpan)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6)
+                        .addComponent(btnBatal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7)))
+                        .addComponent(btnKeluar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -182,27 +245,237 @@ public class FormMataKuliah extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtKodeMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNamaMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7))
-                .addGap(0, 14, Short.MAX_VALUE))
+                    .addComponent(btnTambah)
+                    .addComponent(btnHapus)
+                    .addComponent(btnUbah)
+                    .addComponent(btnSimpan)
+                    .addComponent(btnBatal)
+                    .addComponent(btnKeluar))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private final KonfigurasiDB conf = new KonfigurasiDB();
+    private final String DATABASE = conf.getDBName();
+    private final String USER = conf.getDBUser();
+    private final String PASSWORD = conf.getDBPassword();
+    
+    private final javax.swing.table.DefaultTableModel newTableModel = createNewTableModel();
+    private int selectedRow = 0;
+    
+    private javax.swing.table.DefaultTableModel createNewTableModel(){
+        return new javax.swing.table.DefaultTableModel(
+            new Object[][] {},
+            new String[] {"Kode Mata Kuliah", "Nama Mata Kuliah"}
+        ){
+            boolean[] canEdit = new boolean[] {false, false};
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex){
+                return canEdit[columnIndex];
+            }
+        };
+    }
+
+    private void loadTableData(){
+        try (
+            Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
+            Statement st = con.createStatement();
+            ResultSet res = st.executeQuery("SELECT * FROM t_mata_kuliah");        
+        ){  
+            String data[] = new String[2];
+            while(res.next()){
+                data[0] = res.getString(1);
+                data[1] = res.getString(2);
+                newTableModel.addRow(data);
+            }
+            res.close();
+            st.close();
+            con.close();
+        } catch(SQLException e) {
+            javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
+        }
+    }
+    
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        textCleanup();
+        enableInput();
+        txtKodeMK.requestFocus();
+        btnSimpan.setEnabled(true);
+        btnBatal.setEnabled(true);
+        btnUbah.setEnabled(false);
+        btnHapus.setEnabled(false);
+        btnKeluar.setEnabled(false);
+    }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        try (
+            Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
+            Statement st = con.createStatement();
+        ){
+            final String QUERY = "DELETE FROM t_mata_kuliah WHERE kd_mk = '"+newTableModel.getValueAt(selectedRow, 0).toString()+"'";
+            st.executeUpdate(QUERY);
+            st.close();
+            con.close();
+            newTableModel.removeRow(selectedRow);
+            
+            textCleanup();
+            disableInput();
+            btnHapus.setEnabled(false);
+            btnUbah.setEnabled(false);
+        } catch(SQLException e) {
+            javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
+        }
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
+        if(txtKodeMK.getText().isEmpty() || txtNamaMK.getText().isEmpty()){
+            javax.swing.JOptionPane.showConfirmDialog(this, "Data tidak boleh ada yang kosong, silakan dilengkapi!");
+        } else {
+            try (
+                Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
+                Statement st = con.createStatement();
+            ){
+                final String QUERY = "UPDATE t_mata_kuliah SET kd_mk = '"+txtKodeMK.getText()
+                        + "', nama_mk = '"+txtNamaMK.getText()
+                        + "' WHERE kd_mk = '"+newTableModel.getValueAt(selectedRow, 0).toString()+"'";
+                st.executeUpdate(QUERY);
+		st.close();
+                con.close();
+                
+                String data[] = new String[5];
+                data[0] = txtKodeMK.getText();
+                data[1] = txtNamaMK.getText();
+                newTableModel.removeRow(selectedRow);
+                newTableModel.insertRow(selectedRow, data);
+                
+		textCleanup();
+                disableInput();
+		btnHapus.setEnabled(false);
+                btnUbah.setEnabled(false);
+            } catch(SQLException e) {
+		javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
+            }
+        }
+    }//GEN-LAST:event_btnUbahActionPerformed
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        if(txtKodeMK.getText().isEmpty() || txtNamaMK.getText().isEmpty()){
+            javax.swing.JOptionPane.showConfirmDialog(this, "Data tidak boleh ada yang kosong, silakan dilengkapi!");
+        } else {
+            try (
+                Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
+                Statement st = con.createStatement();
+            ){
+                final String QUERY = "INSERT INTO t_mata_kuliah (kd_mk, nama_mk)"
+                        + "VALUES ('"+txtKodeMK.getText()+"',"
+                        + "'"+txtNamaMK.getText()+"')";
+                st.executeUpdate(QUERY);
+		st.close();
+                con.close();
+                
+                String data[] = new String[5];
+                data[0] = txtKodeMK.getText();
+                data[1] = txtNamaMK.getText();
+                newTableModel.insertRow(0, data);
+                
+		textCleanup();
+                disableInput();
+		btnSimpan.setEnabled(false);
+                btnBatal.setEnabled(false);
+                btnKeluar.setEnabled(true);
+            } catch(SQLException e) {
+		javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
+            }
+        }
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
+        textCleanup();
+        disableInput();
+        btnSimpan.setEnabled(false);
+        btnBatal.setEnabled(false);
+        btnKeluar.setEnabled(true);
+    }//GEN-LAST:event_btnBatalActionPerformed
+
+    private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
+        FormUtama formUtama= new FormUtama();
+        formUtama.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnKeluarActionPerformed
+
+    private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
+        newTableModel.setRowCount(0);
+        try (
+            Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
+            Statement st = con.createStatement();
+            ResultSet res = st.executeQuery("SELECT * FROM t_mata_kuliah WHERE kd_mk = '"+kodeMKCari.getText()+"'");
+        ){  
+            String data[] = new String[5];
+            while(res.next()){
+                data[0] = res.getString(1);
+                data[1] = res.getString(2);
+                newTableModel.addRow(data);
+            }
+            res.close();
+            st.close();
+            con.close();
+        } catch(SQLException e) {
+            javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
+        }
+        kodeMKCari.setText("");
+    }//GEN-LAST:event_btnCariActionPerformed
+
+    private void btnTampilSeluruhDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilSeluruhDataActionPerformed
+        newTableModel.setRowCount(0);
+        loadTableData();
+    }//GEN-LAST:event_btnTampilSeluruhDataActionPerformed
+
+    private void tableMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMKMouseClicked
+        if(evt.getClickCount() == 1){
+            selectedRow = tableMK.getSelectedRow();
+            enableInput();
+            showSelected();
+        }
+    }//GEN-LAST:event_tableMKMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        FormUtama formUtama= new FormUtama();
+        formUtama.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
+    private void showSelected(){
+        txtKodeMK.setText(newTableModel.getValueAt(selectedRow, 0).toString());
+        txtNamaMK.setText(newTableModel.getValueAt(selectedRow, 1).toString());
+        btnHapus.setEnabled(true);
+        btnUbah.setEnabled(true);
+    }
+    
+    private void textCleanup(){
+        txtKodeMK.setText("");
+        txtNamaMK.setText("");
+    }
+    
+    private void disableInput(){
+        txtKodeMK.setEnabled(false);
+        txtNamaMK.setEnabled(false);
+    }
+    
+    private void enableInput(){
+        txtKodeMK.setEnabled(true);
+        txtNamaMK.setEnabled(true);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -239,14 +512,14 @@ public class FormMataKuliah extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton btnBatal;
+    private javax.swing.JButton btnCari;
+    private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnKeluar;
+    private javax.swing.JButton btnSimpan;
+    private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btnTampilSeluruhData;
+    private javax.swing.JButton btnUbah;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -254,9 +527,9 @@ public class FormMataKuliah extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField kodeMKCari;
+    private javax.swing.JTable tableMK;
+    private javax.swing.JTextField txtKodeMK;
+    private javax.swing.JTextField txtNamaMK;
     // End of variables declaration//GEN-END:variables
 }
