@@ -25,7 +25,6 @@ public class FormNilai extends javax.swing.JFrame {
         initComponents();
         disableInput();
         
-        btnSimpan.setEnabled(false);
         btnBatal.setEnabled(false);
         btnUbah.setEnabled(false);
         btnHapus.setEnabled(false);
@@ -55,17 +54,15 @@ public class FormNilai extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtKeterangan = new javax.swing.JTextField();
-        txtIndeks = new javax.swing.JTextField();
         txtNilai = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableNilai = new javax.swing.JTable();
-        btnTambah = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
         btnUbah = new javax.swing.JButton();
-        btnSimpan = new javax.swing.JButton();
         btnBatal = new javax.swing.JButton();
         btnKeluar = new javax.swing.JButton();
         cbKodeMK = new javax.swing.JComboBox<>();
+        cbIndeks = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(728, 435));
@@ -167,14 +164,6 @@ public class FormNilai extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableNilai);
 
-        btnTambah.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnTambah.setText("Tambah");
-        btnTambah.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTambahActionPerformed(evt);
-            }
-        });
-
         btnHapus.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnHapus.setText("Hapus");
         btnHapus.addActionListener(new java.awt.event.ActionListener() {
@@ -188,14 +177,6 @@ public class FormNilai extends javax.swing.JFrame {
         btnUbah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUbahActionPerformed(evt);
-            }
-        });
-
-        btnSimpan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnSimpan.setText("Simpan");
-        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSimpanActionPerformed(evt);
             }
         });
 
@@ -217,6 +198,8 @@ public class FormNilai extends javax.swing.JFrame {
 
         cbKodeMK.setModel(newCbModel());
 
+        cbIndeks.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D", "E" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -236,24 +219,18 @@ public class FormNilai extends javax.swing.JFrame {
                             .addComponent(txtNilai)
                             .addComponent(cbKodeMK, 0, 101, Short.MAX_VALUE))
                         .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtIndeks, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbIndeks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTambah)
-                        .addGap(18, 18, 18)
                         .addComponent(btnHapus)
                         .addGap(18, 18, 18)
                         .addComponent(btnUbah)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSimpan)
                         .addGap(18, 18, 18)
                         .addComponent(btnBatal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -270,8 +247,8 @@ public class FormNilai extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel7)
-                    .addComponent(txtIndeks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbKodeMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbKodeMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbIndeks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -280,15 +257,13 @@ public class FormNilai extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTambah)
                     .addComponent(btnHapus)
                     .addComponent(btnUbah)
-                    .addComponent(btnSimpan)
                     .addComponent(btnBatal)
                     .addComponent(btnKeluar))
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -377,16 +352,6 @@ public class FormNilai extends javax.swing.JFrame {
         }
     }
     
-    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        textCleanup();
-        enableInput();
-        btnSimpan.setEnabled(true);
-        btnBatal.setEnabled(true);
-        btnUbah.setEnabled(false);
-        btnHapus.setEnabled(false);
-        btnKeluar.setEnabled(false);
-    }//GEN-LAST:event_btnTambahActionPerformed
-
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         try (
             Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
@@ -397,25 +362,24 @@ public class FormNilai extends javax.swing.JFrame {
             st.close();
             con.close();
             
-            newTableModel.setValueAt("", selectedRow, 2);
-            newTableModel.setValueAt("", selectedRow, 3);
-            newTableModel.setValueAt("", selectedRow, 4);
-            newTableModel.setValueAt("", selectedRow, 5);
+            newTableModel.setValueAt(null, selectedRow, 2);
+            newTableModel.setValueAt(null, selectedRow, 3);
+            newTableModel.setValueAt(null, selectedRow, 4);
+            newTableModel.setValueAt(null, selectedRow, 5);
             
             textCleanup();
             disableInput();
             btnHapus.setEnabled(false);
             btnUbah.setEnabled(false);
+            btnBatal.setEnabled(false);
+            btnKeluar.setEnabled(true);
         } catch(SQLException e) {
             javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
         }
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
-        if(txtNilai.getText().isEmpty() ||
-            txtIndeks.getText().isEmpty() ||
-            txtKeterangan.getText().isEmpty()
-        ){
+        if(txtNilai.getText().isEmpty() || txtKeterangan.getText().isEmpty()){
             javax.swing.JOptionPane.showConfirmDialog(this, "Data tidak boleh ada yang kosong, silakan dilengkapi!");
         } else {
             try (
@@ -424,66 +388,33 @@ public class FormNilai extends javax.swing.JFrame {
             ){
                 final String QUERY = "UPDATE t_nilai SET kd_mk = '"+cbKodeMK.getSelectedItem()
                         + "', nilai = '"+txtNilai.getText()
-                        + "', indeks = '"+txtIndeks.getText()
+                        + "', indeks = '"+cbIndeks.getSelectedItem()
                         + "', ket = '"+txtKeterangan.getText()
                         + "' WHERE nim = '"+newTableModel.getValueAt(selectedRow, 1).toString()+"'";
                 st.executeUpdate(QUERY);
                 
                 newTableModel.setValueAt(cbKodeMK.getSelectedItem(), selectedRow, 2);
                 newTableModel.setValueAt(txtNilai.getText(), selectedRow, 3);
-                newTableModel.setValueAt(txtIndeks.getText(), selectedRow, 4);
+                newTableModel.setValueAt(cbIndeks.getSelectedItem(), selectedRow, 4);
                 newTableModel.setValueAt(txtKeterangan.getText(), selectedRow, 5);
                 
 		textCleanup();
                 disableInput();
 		btnHapus.setEnabled(false);
                 btnUbah.setEnabled(false);
-            } catch(SQLException e) {
-		javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
-            }
-        }
-    }//GEN-LAST:event_btnUbahActionPerformed
-
-    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        if(txtNilai.getText().isEmpty() ||
-            txtIndeks.getText().isEmpty() ||
-            txtKeterangan.getText().isEmpty()
-        ){
-            javax.swing.JOptionPane.showConfirmDialog(this, "Data tidak boleh ada yang kosong, silakan dilengkapi!");
-        } else {
-            try (
-                Connection con = DriverManager.getConnection(DATABASE, USER, PASSWORD);
-                Statement st = con.createStatement();
-            ){
-                final String QUERY = "INSERT INTO t_nilai (kd_mk, nilai, indeks, ket)"
-                        + "VALUES ('"+cbKodeMK.getSelectedItem()+"',"
-                        + "'"+txtNilai.getText()+"',"
-                        + "'"+txtIndeks.getText()+"',"
-                        + "'"+txtKeterangan.getText()+"')";
-                st.executeUpdate(QUERY);
-                st.close();
-                con.close();
-                
-                newTableModel.setValueAt(cbKodeMK.getSelectedItem(), 0, 2);
-                newTableModel.setValueAt(txtNilai.getText(), 0, 3);
-                newTableModel.setValueAt(txtIndeks.getText(), 0, 4);
-                newTableModel.setValueAt(txtKeterangan.getText(), 0, 5);
-                
-		textCleanup();
-                disableInput();
-		btnSimpan.setEnabled(false);
                 btnBatal.setEnabled(false);
                 btnKeluar.setEnabled(true);
             } catch(SQLException e) {
 		javax.swing.JOptionPane.showConfirmDialog(this, e.toString());
             }
         }
-    }//GEN-LAST:event_btnSimpanActionPerformed
+    }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
         textCleanup();
         disableInput();
-        btnSimpan.setEnabled(false);
+        btnHapus.setEnabled(false);
+        btnUbah.setEnabled(false);
         btnBatal.setEnabled(false);
         btnKeluar.setEnabled(true);
     }//GEN-LAST:event_btnBatalActionPerformed
@@ -528,6 +459,11 @@ public class FormNilai extends javax.swing.JFrame {
     private void tableNilaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableNilaiMouseClicked
         if(evt.getClickCount() == 1){
             selectedRow = tableNilai.getSelectedRow();
+            txtNilai.requestFocus();
+            btnHapus.setEnabled(true);
+            btnUbah.setEnabled(true);
+            btnBatal.setEnabled(true);
+            btnKeluar.setEnabled(false);
             enableInput();
             showSelected();
         }
@@ -553,29 +489,26 @@ public class FormNilai extends javax.swing.JFrame {
         }
         cbKodeMK.setSelectedItem(kodeMKVal);
         txtNilai.setText(nilaiVal);
-        txtIndeks.setText(indeksVal);
+        cbIndeks.setSelectedItem(indeksVal);
         txtKeterangan.setText(ketVal);
-        btnHapus.setEnabled(true);
-        btnUbah.setEnabled(true);
     }
     
     private void textCleanup(){
         txtNilai.setText("");
-        txtIndeks.setText("");
         txtKeterangan.setText("");
     }
     
     private void disableInput(){
         cbKodeMK.setEnabled(false);
         txtNilai.setEnabled(false);
-        txtIndeks.setEnabled(false);
+        cbIndeks.setEnabled(false);
         txtKeterangan.setEnabled(false);
     }
     
     private void enableInput(){
         cbKodeMK.setEnabled(true);
         txtNilai.setEnabled(true);
-        txtIndeks.setEnabled(true);
+        cbIndeks.setEnabled(true);
         txtKeterangan.setEnabled(true);
     }
     
@@ -619,10 +552,9 @@ public class FormNilai extends javax.swing.JFrame {
     private javax.swing.JButton btnCari;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKeluar;
-    private javax.swing.JButton btnSimpan;
-    private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnTampilSeluruhData;
     private javax.swing.JButton btnUbah;
+    private javax.swing.JComboBox<String> cbIndeks;
     private javax.swing.JComboBox<String> cbKodeMK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -635,7 +567,6 @@ public class FormNilai extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableNilai;
     private javax.swing.JTextField txtCariNIM;
-    private javax.swing.JTextField txtIndeks;
     private javax.swing.JTextField txtKeterangan;
     private javax.swing.JTextField txtNilai;
     // End of variables declaration//GEN-END:variables

@@ -157,6 +157,7 @@ public class FormMhs extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tabelMahasiswa);
 
         btnTambah.setText("Tambah");
+        btnTambah.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTambahActionPerformed(evt);
@@ -164,6 +165,7 @@ public class FormMhs extends javax.swing.JFrame {
         });
 
         btnHapus.setText("Hapus");
+        btnHapus.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHapusActionPerformed(evt);
@@ -171,6 +173,7 @@ public class FormMhs extends javax.swing.JFrame {
         });
 
         btnUbah.setText("Ubah");
+        btnUbah.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnUbah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUbahActionPerformed(evt);
@@ -178,6 +181,7 @@ public class FormMhs extends javax.swing.JFrame {
         });
 
         btnSimpan.setText("Simpan");
+        btnSimpan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimpanActionPerformed(evt);
@@ -185,6 +189,7 @@ public class FormMhs extends javax.swing.JFrame {
         });
 
         btnBatal.setText("Batal");
+        btnBatal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnBatal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBatalActionPerformed(evt);
@@ -192,6 +197,7 @@ public class FormMhs extends javax.swing.JFrame {
         });
 
         btnKeluar.setText("Keluar");
+        btnKeluar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnKeluar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKeluarActionPerformed(evt);
@@ -331,7 +337,7 @@ public class FormMhs extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 743, 492);
+        setBounds(0, 0, 743, 493);
     }// </editor-fold>//GEN-END:initComponents
 
     private final KonfigurasiDB conf = new KonfigurasiDB();
